@@ -6,58 +6,61 @@ import java.util.*;
 public class Group<T> {
     private ArrayList<T> group;
 
-    public Group() {
+    Group() {
         group = new ArrayList<>();
     }
 
-    public Group(T[] array){
-         group = new ArrayList<>(Arrays.asList(array));
+    Group(T[] array) {
+        group = new ArrayList<>(Arrays.asList(array));
+        removeDuplicates();
     }
 
-    public boolean isMember(T element){
+    boolean isMember(T element) {
         return group.contains(element);
     }
 
-    public boolean isSubset(Group<T> subsetGroup){
+    boolean isSubset(Group<T> subsetGroup) {
         return group.containsAll(subsetGroup.group);
     }
 
-    public void union(Group<T> secondGroup) {
+    void union(Group<T> secondGroup) {
         this.group.addAll(secondGroup.group);
-        Set<T> hs = new HashSet<>();
-        hs.addAll(this.group);
-        this.group.clear();
-        this.group.addAll(hs);
+        removeDuplicates();
     }
 
-    public String toString(){
+    public String toString() {
         return group.toString();
     }
 
-    public void intersect(Group<T> secondGroup) {
+    void intersect(Group<T> secondGroup) {
         Group<T> finalGroup = new Group<>();
 
         for (T t : this.group) {
-            if(secondGroup.group.contains(t)) {
+            if (secondGroup.group.contains(t)) {
                 finalGroup.group.add(t);
             }
         }
         this.group = finalGroup.group;
     }
 
-    public void insert(T element){
+    void insert(T element) {
         if (!this.isMember(element))
             this.group.add(element);
     }
-    public void delete(T element){
+
+    void delete(T element) {
         if (this.isMember(element))
             this.group.remove(element);
     }
 
-    public Iterator<T> iterator(){
+    public Iterator<T> iterator() {
         return this.group.iterator();
     }
 
-
-
+    private void removeDuplicates() {
+        Set<T> hs = new HashSet<>();
+        hs.addAll(this.group);
+        this.group.clear();
+        this.group.addAll(hs);
+    }
 }
