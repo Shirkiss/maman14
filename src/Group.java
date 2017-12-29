@@ -28,6 +28,7 @@ public class Group<T> {
         removeDuplicates();
     }
 
+    @Override
     public String toString() {
         return group.toString();
     }
@@ -62,5 +63,13 @@ public class Group<T> {
         hs.addAll(this.group);
         this.group.clear();
         this.group.addAll(hs);
+    }
+
+    T get(int index) {
+        return this.group.get(index);
+    }
+
+    int size() {
+        return this.group.size();
     }
 }
